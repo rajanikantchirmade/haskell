@@ -8,7 +8,6 @@ encode_decode s k = s == decode' (encode' s k) k
 
 main :: IO ()
 main =  do
-  quickCheck encode_decode 
   hspec $ do
     describe "encode" $ do
       it "encode (string key) == encoded string" $do
@@ -19,3 +18,4 @@ main =  do
     describe "encode/decode" $ do
       it "string == decode (encode (string key) key)" $ do
         "Hello World" `shouldBe` decode' (encode' "Hello World" "xyz") "xyz"
+  quickCheck encode_decode 
