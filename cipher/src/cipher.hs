@@ -7,17 +7,23 @@ module Cipher
 import Data.Char
 import Data.List
 
+charSetSize :: Int
+charSetSize = length ['a'..'z']
+
+firstAlpha :: Char -> Int
+firstAlpha c = if isLower c then ord 'a' else ord 'A'
+
 code :: Char -> Int
-code c = mod (ord c)(if isLower c then 97 else 65)
+code c = mod (ord c) (firstAlpha c)
 
 rotatefwd :: Char -> Char -> Char
 rotatefwd y x = if isAlpha y
-                then chr ((mod (code y + code x) 26) + (if isLower y then 97 else 65))
+                then chr ((mod (code y + code x) charSetSize) + (firstAlpha y))
                 else y
 
 rotateback :: Char -> Char -> Char
 rotateback y x = if isAlpha y
-                 then chr ((mod (code y - code x) 26) + (if isLower y then 97 else 65))
+                 then chr ((mod (code y - code x) charSetSize) + (firstAlpha y))
                  else y
 
 encode' :: String -> String -> String
