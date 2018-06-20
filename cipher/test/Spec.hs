@@ -3,7 +3,7 @@ import Test.Hspec
 import Test.QuickCheck
 import Cipher
 
-encode_decode :: [Char] -> [Char] -> Bool
+encode_decode :: String -> String -> Bool
 encode_decode s k = s == decode' (encode' s k) k
 
 main :: IO ()
@@ -18,4 +18,4 @@ main =  do
     describe "encode/decode" $ do
       it "string == decode (encode (string key) key)" $ do
         "Hello World" `shouldBe` decode' (encode' "Hello World" "xyz") "xyz"
-  quickCheck encode_decode 
+  verboseCheck encode_decode 

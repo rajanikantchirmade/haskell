@@ -20,15 +20,17 @@ rotateback y x = if isAlpha y
                  then chr ((mod (code y - code x) 26) + (if isLower y then 97 else 65))
                  else y
 
-encode' :: [Char] -> [Char] -> [Char]
+encode' :: String -> String -> String
 encode' [] _ = []
+encode' _ [] = []
 encode' str cipher = do
   let (a, b) = splitAt (length cipher) str
   let esubstr = zipWith rotatefwd a cipher
   esubstr ++ encode' b cipher
 
-decode' :: [Char] -> [Char] -> [Char]
+decode' :: String -> String -> String
 decode' [] _ = []
+decode' _ [] = []
 decode' str cipher = do
   let (a, b) = splitAt (length cipher) str
   let dsubstr = zipWith rotateback a cipher
